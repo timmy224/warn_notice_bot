@@ -6,8 +6,10 @@ import requests
 from .base_warn import Warn
 
 class NYWarn(Warn):
-    def __init__(self, url):
-        super().__init__(url)
+    url = 'https://dol.ny.gov/warn-notices'
+
+    def __init__(self):
+        super().__init__(self.url)
         self.tags = "#warnact #layoffs #ny #newyork"
 
     def fetch_latest_notices(self) -> List[dict]:
@@ -18,7 +20,7 @@ class NYWarn(Warn):
             posted_date = row.findNext('td').findNext('td').text
             if self._compare_date not in posted_date:
                 continue
-            
+
             # get pdf link
             pdf_link = None
             try:

@@ -56,7 +56,9 @@ class Warn:
     def post_to_twitter(self, msg) -> None:
         if self._api is None:
             self.create_twitter_client()
-        self._api.create_tweet(text=msg)
+        
+        if os.environ.get("ENV", "development") == "production":
+            self._api.create_tweet(text=msg)
     
     def compare_date(self) -> str:
         curr_date = datetime.now(pytz.timezone("America/New_York"))

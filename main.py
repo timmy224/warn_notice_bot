@@ -1,16 +1,25 @@
-from warn_classes import NYWarn
+import inspect
+import sys
+
+import warn_classes
 
 def handler(event, context):
-    url = 'https://dol.ny.gov/warn-notices'
-    print('Begin bot')
-    warn_bot = NYWarn(url)
-    print('Fetching warnings')
-    layoffs = warn_bot.fetch_latest_notices()
-    print(f'{len(layoffs)} layoffs found')
-    if layoffs:
-        print('Layoffs found')
-        msg = warn_bot.create_message(layoffs)
-        print('Post to Twitter')
-        warn_bot.post_to_twitter(msg)
-    print('Completed')
+    clsmembers = inspect.getmembers(sys.modules[warn_classes.__name__], inspect.isclass)
 
+    for i in range(len(clsmembers)):
+        bot_name = clsmembers[i][0]
+        print(f'Begin {bot_name} bot')
+        warn_bot = clsmembers[i][1]()
+        print('Fetching warnings')
+        layoffs = warn_bot.fetch_latest_notices()
+        print(f'{len(layoffs)} layoffs found')
+        if layoffs:
+            print('Layoffs found')
+            msg = warn_bot.create_message(layoffs)
+            print('Post to Twitter')
+            warn_bot.post_to_twitter(msg)
+        print('Completed')
+        print()
+
+if __name__ == "__main__":
+    handler(None, None)
