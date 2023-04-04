@@ -6,12 +6,12 @@ from .base_warn import Warn
 
 class CAWarn(Warn):
     url = 'https://edd.ca.gov/siteassets/files/jobs_and_training/warn/warn_report.xlsx'
+    tags = "#warnact #layoffs #ca #california"
 
-    def __init__(self):
-        super().__init__(self.url)
-        self.tags = "#warnact #layoffs #ca #california"
+    def __init__(self, date=None):
+        super().__init__(self.url, date)
 
-    def fetch_latest_notices(self) -> List[dict]:
+    def _fetch_latest_notices(self) -> List[dict]:
         df = pd.read_excel(self.url, sheet_name='Sheet1', dtype="object")
         month, date, year = self.get_month_date_year(self._compare_date)
         match_date = f'{year}-{month}-{date} 00:00:00'
@@ -42,13 +42,3 @@ class CAWarn(Warn):
                 date = "0" + date
 
         return month, date, year
-
-    def process_pdf(self, pdf_text) -> dict:
-        company_name = re.search(r"(?:C\n?o\n?m\n?p\n?a\n?n\n?y: )\s+([^\n]+)", pdf_text).group(1)
-        number_affected = int(re.search(r"N\n?u\n?m\n?b\n?e\n?r\s+A\s*f\n?f\n?e\n?c\n?t\n?e\n?d:\s*(\d+)", pdf_text).group(1))
-        
-        return {
-            "company_name": company_name.strip(),
-            "number_affected": number_affected,
-        }
-    
