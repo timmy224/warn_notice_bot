@@ -6,8 +6,8 @@ import requests
 from .base_warn import Warn
 
 class NYWarn(Warn):
-    def __init__(self, url):
-        super().__init__(url)
+    def __init__(self, url, date=None):
+        super().__init__(url, date)
         self.tags = "#warnact #layoffs #ny #newyork"
 
     def fetch_latest_notices(self) -> List[dict]:
