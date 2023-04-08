@@ -7,11 +7,11 @@ from .base_warn import Warn
 
 class NYWarn(Warn):
     url = "https://dol.ny.gov/warn-notices"
-    tags = "#warnact #layoffs #ny #newyork"
     state = "NY"
 
     def __init__(self, date=None):
         super().__init__(self.url, date)
+        self.tags = "#warnact #layoffs #ny #newyork"
 
     def _fetch_latest_notices(self) -> dict:
         rows = self.get_rows()

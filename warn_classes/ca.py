@@ -6,11 +6,11 @@ from .base_warn import Warn
 
 class CAWarn(Warn):
     url = 'https://edd.ca.gov/siteassets/files/jobs_and_training/warn/warn_report.xlsx'
-    tags = "#warnact #layoffs #ca #california"
     state = "CA"
 
     def __init__(self, date=None):
         super().__init__(self.url, date)
+        self.tags = "#warnact #layoffs #ca #california"
 
     def _fetch_latest_notices(self) -> dict:
         df = pd.read_excel(self.url, sheet_name='Sheet1', dtype="object")

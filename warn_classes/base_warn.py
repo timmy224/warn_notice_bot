@@ -39,7 +39,7 @@ class Warn:
             else:
                 temp_str += self.tags
                 msgs.append(temp_str)
-                temp_str = date
+                temp_str = header
                 temp_str += msg
 
             if i == max_iter:
