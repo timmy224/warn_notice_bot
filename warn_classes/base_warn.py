@@ -2,9 +2,11 @@ from datetime import datetime
 import os
 from typing import List
 
+import pandas as pd
 from PyPDF2 import PdfReader
 from pytwitter import Api
 import requests
+from tabula import read_pdf
 import pytz
 
 class Warn:
@@ -59,6 +61,10 @@ class Warn:
     def _fetch_latest_notices(self) -> List[dict]:
         raise NotImplementedError
     
+    def get_pdf_table(self, pdf_link:str) -> pd.DataFrame:
+        df = read_pdf(pdf_link)[0]
+        return df
+    
     def get_pdf_text(self, pdf_link:str) -> str:
         print(f'Requesting PDF for {pdf_link}...')
         response = requests.get(pdf_link)
@@ -87,7 +93,7 @@ class Warn:
     def post_to_twitter(self, msgs: List[str]) -> None:
         if not msgs:
             return 
-        
+
         if os.environ.get('ENV') == "production":
             if self._api is None:
                 self.create_twitter_client()
