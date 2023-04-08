@@ -61,9 +61,9 @@ class Warn:
     def _fetch_latest_notices(self) -> List[dict]:
         raise NotImplementedError
     
-    def get_pdf_table(self, pdf_link:str) -> pd.DataFrame:
-        df = read_pdf(pdf_link)[0]
-        return df
+    def get_pdf_tables(self, pdf_link:str) -> List[pd.DataFrame]:
+        dfs = read_pdf(pdf_link, pages="all")
+        return dfs
     
     def get_pdf_text(self, pdf_link:str) -> str:
         print(f'Requesting PDF for {pdf_link}...')
