@@ -15,10 +15,10 @@ class NJWarn(Warn):
     def _fetch_latest_notices(self) -> dict:
         layoffs = {}
         try:
-            df = self.get_pdf_table(self._url)
+            df = self.get_pdf_tables(self._url)[0]
         except:
             print("Error processing pdf text")
-
+        
         df = df[df["Effective Date"] == self._compare_date]
         if len(df) == 0:
             return {}
