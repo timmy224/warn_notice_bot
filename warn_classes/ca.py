@@ -13,7 +13,7 @@ class CAWarn(Warn):
         self.tags = "#warnact #layoffs #ca #california"
 
     def _fetch_latest_notices(self) -> dict:
-        df = pd.read_excel(self.url, sheet_name='Sheet1', dtype="object")
+        df = pd.read_excel(self.url, sheet_name='Sheet1', dtype=str)
         month, date, year = self.get_month_date_year(self._compare_date)
         match_date = f'{year}-{month}-{date} 00:00:00'
         df['Received\nDate'] = df['Received\nDate'].astype(str)
