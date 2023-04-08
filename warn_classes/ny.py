@@ -18,7 +18,7 @@ class NYWarn(Warn):
             posted_date = row.findNext('td').findNext('td').text
             if self._compare_date not in posted_date:
                 continue
-            
+
             # get pdf link
             pdf_link = None
             try:
