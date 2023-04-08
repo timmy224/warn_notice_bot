@@ -7,25 +7,25 @@ from .base_warn import Warn
 class CAWarn(Warn):
     url = 'https://edd.ca.gov/siteassets/files/jobs_and_training/warn/warn_report.xlsx'
     tags = "#warnact #layoffs #ca #california"
+    state = "CA"
 
     def __init__(self, date=None):
         super().__init__(self.url, date)
 
-    def _fetch_latest_notices(self) -> List[dict]:
+    def _fetch_latest_notices(self) -> dict:
         df = pd.read_excel(self.url, sheet_name='Sheet1', dtype="object")
         month, date, year = self.get_month_date_year(self._compare_date)
         match_date = f'{year}-{month}-{date} 00:00:00'
         df['Received\nDate'] = df['Received\nDate'].astype(str)
         df = df[df['Received\nDate'] == match_date]
 
-        layoffs = []
+        layoffs = {}
         for _, row in df.iterrows():
-            company_name = row['Company']
+            company_name = row['Company'].strip()
             number_affected = row['No. Of\nEmployees']
-            layoffs.append({
-                "company_name": company_name.strip(),
-                "number_affected": number_affected,
-            })
+            if company_name not in layoffs:
+                layoffs[company_name] = 0 
+            layoffs[company_name] += number_affected
         return layoffs
 
     def get_month_date_year(self, date_str):

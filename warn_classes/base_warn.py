@@ -17,16 +17,22 @@ class Warn:
         self.tags = ""
         self._api = None
         
-    def create_messages(self, layoffs: List[dict]) -> str:
+    def create_messages(self, layoffs: dict) -> str:
         print("Creating messages...")
         msgs = []
         temp_str = ""
-        date = f"Posted Date: {self._compare_date}\n"
-        temp_str += date
+
+        # header
+        header = f"{self.state} Posted Date: {self._compare_date}\n"
+        temp_str += header
+
+        layoffs = list(layoffs.items())
+
+        # create tweet
         max_iter = len(layoffs) - 1
         for i in range(len(layoffs)):
-            layoff = layoffs[i]
-            msg = f"{layoff['company_name']}: {layoff['number_affected']}\n"
+            company_name, number_affected = layoffs[i]
+            msg = f"{company_name}: {number_affected}\n"
             curr_msg_len = len(msg)
             if len(temp_str) + curr_msg_len + len(self.tags) <= self.MAX_MSG_LEN:
                 temp_str += msg
@@ -39,12 +45,14 @@ class Warn:
             if i == max_iter:
                 temp_str += self.tags
                 msgs.append(temp_str)
+
         print("Finished creating messages")
         return msgs
     
     def fetch_latest_notices(self) -> List[dict]: 
         print("Fetching layoff notices...")
         layoffs = self._fetch_latest_notices()
+
         print(f"{len(layoffs)} layoffs found")
         return layoffs
 
@@ -91,4 +99,5 @@ class Warn:
     def compare_date(self) -> str:
         curr_date = datetime.now(pytz.timezone("America/New_York"))
         curr_date = curr_date.strftime("%-m/%-d/%Y")
+        print(curr_date)
         return curr_date

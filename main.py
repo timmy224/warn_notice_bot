@@ -3,7 +3,7 @@ import sys
 
 import warn_classes
 
-def handler(event=None, context=None) -> None:
+def handler(event={}, context=None) -> None:
     date = event.get("date")
 
     clsmembers = inspect.getmembers(
