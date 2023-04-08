@@ -6,6 +6,10 @@ The Warn Notice Layoff Twitter Bot is a Python-based bot that automatically twee
 
 This Twitter bot utilizes web scraping techniques to gather information from publicly available sources, such as state government websites, to identify companies that have issued WARN notices. It then automatically generates tweets containing relevant details, such as the state, company name, number of employees impacted, and the date of notice.
 
+## States
+ 1. NY
+ 2. CA
+
 ## Example Tweet
 
 > CA Posted Date: 4/5/2023 
