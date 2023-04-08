@@ -54,12 +54,4 @@ class SCWarn(Warn):
             return pdf_link
         return None
 
-    def process_pdf(self, pdf_text:str) -> Tuple[str, str]:
-        company_pattern = r"(?:C\n?o\n?m\n?p\n?a\n?n\n?y: )\s+([^\n]+)"
-        company_name = re.search(company_pattern, pdf_text).group(1)
-
-        number_pattern = r"N\n?u\n?m\n?b\n?e\n?r\s+A\s*f\n?f\n?e\n?c\n?t\n?e\n?d:\s*(\d+)"
-        number_affected = int(re.search(number_pattern, pdf_text).group(1))
-        
-        return company_name.strip(), number_affected
     
