@@ -7,8 +7,12 @@ The Warn Notice Layoff Twitter Bot is a Python-based bot that automatically twee
 This Twitter bot utilizes web scraping techniques to gather information from publicly available sources, such as state government websites, to identify companies that have issued WARN notices. It then automatically generates tweets containing relevant details, such as the state, company name, number of employees impacted, and the date of notice.
 
 ## States
- 1. NY
- 2. CA
+- CA
+- MA
+- NJ
+- NY
+- SC
+- TX 
 
 ## Example Tweet
 
@@ -19,6 +23,7 @@ Salesforce, Inc.: 86\
 Roku, Inc.: 91\
 Zume, Inc.: 58\
 [#warnact](https://twitter.com/hashtag/warnact?src=hashtag_click)  [#layoffs](https://twitter.com/hashtag/layoffs?src=hashtag_click)  [#ca](https://twitter.com/hashtag/ca?src=hashtag_click)  [#california](https://twitter.com/hashtag/california?src=hashtag_click)
+
 
 ## Installation
 1. Create virtual environment
@@ -54,4 +59,10 @@ Twitter
  - consumer_secret
 
 
+## Contributing
 
+Contributions to the Warn Notice Layoff Twitter Bot are welcome! If you would like to contribute to the project, please fork the repository, create a feature branch, make your changes, and submit a pull request. Please ensure that your code follows best practices, is well-documented, and includes appropriate unit tests.
+
+## License
+
+The Warn Notice Layoff Twitter Bot is released under the MIT License, which allows for free use, modification, and distribution of the software, subject to certain conditions. Please review the license file for more details.

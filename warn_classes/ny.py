@@ -59,7 +59,7 @@ class NYWarn(Warn):
             pdf_link = pdf_link.strip()
             return pdf_link
 
-    def process_pdf(self, pdf_text) -> Tuple[str, str]:
+    def process_pdf(self, pdf_text:str) -> Tuple[str, str]:
         company_pattern = r"(?:C\n?o\n?m\n?p\n?a\n?n\n?y: )\s+([^\n]+)"
         company_name = re.search(company_pattern, pdf_text).group(1)
 
