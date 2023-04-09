@@ -10,7 +10,7 @@ class NJWarn(Warn):
 
     def __init__(self, date=None):
         super().__init__(self.url, date)
-        self.tags = "#warnact #layoffs #nj #newjersey"
+        self.tags = "#warnact #layoffs #NJ #newjersey"
 
     def _fetch_latest_notices(self) -> dict:
         layoffs = {}

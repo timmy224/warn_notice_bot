@@ -10,7 +10,7 @@ class CAWarn(Warn):
 
     def __init__(self, date=None):
         super().__init__(self.url, date)
-        self.tags = "#warnact #layoffs #ca #california"
+        self.tags = "#warnact #layoffs #CA #california"
 
     def _fetch_latest_notices(self) -> dict:
         df = pd.read_excel(self.url, sheet_name='Sheet1', dtype=str)
