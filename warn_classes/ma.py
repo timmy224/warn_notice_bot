@@ -21,8 +21,12 @@ class MAWarn(Warn):
             year[-2:]])
         
         download_url = f"https://www.mass.gov/doc/warn-report-for-the-week-ending-{formatted_date}/download"
-        reader = pd.ExcelFile(download_url)
-
+        try:
+            reader = pd.ExcelFile(download_url)
+        except:
+            print("File not found: updated each Friday")
+            return {}
+        
         sheet_names = [s for s in reader.sheet_names]
         df = pd.DataFrame()
         for sheet_name in sheet_names:
