@@ -17,8 +17,7 @@ class MAWarn(Warn):
         
         formatted_date = "-".join([
             month.zfill(2), 
-            # day.zfill(2),
-            "07",
+            day.zfill(2),
             year[-2:]])
         
         download_url = f"https://www.mass.gov/doc/warn-report-for-the-week-ending-{formatted_date}/download"
