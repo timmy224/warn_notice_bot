@@ -8,6 +8,7 @@ This Twitter bot utilizes web scraping techniques to gather information from pub
 
 ## States
 - CA
+- OH
 - MA
 - NJ
 - NY

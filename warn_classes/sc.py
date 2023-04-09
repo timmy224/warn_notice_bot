@@ -1,6 +1,3 @@
-import re
-from typing import List, Tuple
-
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
@@ -13,7 +10,7 @@ class SCWarn(Warn):
 
     def __init__(self, date=None):
         super().__init__(self.url, date)
-        self.tags = "#warnact #layoffs #sc #southcarolina"
+        self.tags = "#warnact #layoffs #SC #southcarolina"
 
     def _fetch_latest_notices(self) -> dict:
         layoffs = {}

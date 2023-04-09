@@ -9,7 +9,7 @@ class MAWarn(Warn):
 
     def __init__(self, date=None):
         super().__init__(self.url, date)
-        self.tags = "#warnact #layoffs #ma #massachusetts"
+        self.tags = "#warnact #layoffs #MA #massachusetts"
 
     def _fetch_latest_notices(self) -> dict:
         layoffs = {}

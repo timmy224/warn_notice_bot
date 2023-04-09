@@ -11,7 +11,7 @@ class NYWarn(Warn):
 
     def __init__(self, date=None):
         super().__init__(self.url, date)
-        self.tags = "#warnact #layoffs #ny #newyork"
+        self.tags = "#warnact #layoffs #NY #newyork"
 
     def _fetch_latest_notices(self) -> dict:
         rows = self.get_rows()
