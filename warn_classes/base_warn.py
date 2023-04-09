@@ -64,7 +64,7 @@ class Warn:
     def get_pdf_tables(self, pdf_link:str) -> List[pd.DataFrame]:
         dfs = read_pdf(pdf_link, pages="all")
         return dfs
-    
+
     def get_pdf_text(self, pdf_link:str) -> str:
         print(f'Requesting PDF for {pdf_link}...')
         response = requests.get(pdf_link)

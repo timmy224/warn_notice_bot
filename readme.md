@@ -12,13 +12,14 @@ This Twitter bot utilizes web scraping techniques to gather information from pub
 
 ## Example Tweet
 
-> CA Posted Date: 4/5/2023 
-> International Vitamin Corporation IVC: 52 
-> Childhelp Inc.: 110 
-> Salesforce, Inc.: 86 
-> Roku, Inc.: 91 
-> Zume, Inc.: 58
-> [#warnact](https://twitter.com/hashtag/warnact?src=hashtag_click)  [#layoffs](https://twitter.com/hashtag/layoffs?src=hashtag_click)  [#ca](https://twitter.com/hashtag/ca?src=hashtag_click)  [#california](https://twitter.com/hashtag/california?src=hashtag_click)
+CA Posted Date: 4/5/2023\
+International Vitamin Corporation IVC: 52\
+Childhelp Inc.: 110\
+Salesforce, Inc.: 86\
+Roku, Inc.: 91\
+Zume, Inc.: 58\
+[#warnact](https://twitter.com/hashtag/warnact?src=hashtag_click)  [#layoffs](https://twitter.com/hashtag/layoffs?src=hashtag_click)  [#ca](https://twitter.com/hashtag/ca?src=hashtag_click)  [#california](https://twitter.com/hashtag/california?src=hashtag_click)
+
 
 ## Installation
 1. Create virtual environment
