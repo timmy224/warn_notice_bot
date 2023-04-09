@@ -8,6 +8,7 @@ dataclasses-json==0.5.7
 distro==1.8.0
 et-xmlfile==1.1.0
 idna==3.4
+lxml==4.9.2
 marshmallow==3.19.0
 marshmallow-enum==1.5.1
 mypy-extensions==1.0.0
