@@ -18,6 +18,7 @@ class NJWarn(Warn):
             df = self.get_pdf_tables(self._url)[0]
         except:
             print("Error processing pdf text")
+            return {}
         
         df = df[df["Effective Date"] == self._compare_date]
         if len(df) == 0:
