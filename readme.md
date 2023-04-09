@@ -58,4 +58,10 @@ Twitter
  - consumer_secret
 
 
+## Contributing
 
+Contributions to the Warn Notice Layoff Twitter Bot are welcome! If you would like to contribute to the project, please fork the repository, create a feature branch, make your changes, and submit a pull request. Please ensure that your code follows best practices, is well-documented, and includes appropriate unit tests.
+
+## License
+
+The Warn Notice Layoff Twitter Bot is released under the MIT License, which allows for free use, modification, and distribution of the software, subject to certain conditions. Please review the license file for more details.
