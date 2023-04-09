@@ -19,6 +19,9 @@ class SCWarn(Warn):
         layoffs = {}
         
         pdf_link = self.get_pdf_link(self._url)
+        if pdf_link is None:
+            return {}
+        
         dfs = self.get_pdf_tables(pdf_link)
         df = pd.DataFrame()
         for i_df in dfs:
