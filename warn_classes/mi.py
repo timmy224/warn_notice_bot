@@ -11,7 +11,7 @@ class MIWarn(Warn):
 
     def __init__(self, date=None):
         super().__init__(self.url, date)
-        self.tags = "#warnact #layoffs #MI #michigan"
+        self.tags = "#jobs #layoffs #MI #michigan"
 
     def _fetch_latest_notices(self) -> dict:
         layoffs = {}

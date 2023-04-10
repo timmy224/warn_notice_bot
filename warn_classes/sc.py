@@ -10,7 +10,7 @@ class SCWarn(Warn):
 
     def __init__(self, date=None):
         super().__init__(self.url, date)
-        self.tags = "#warnact #layoffs #SC #southcarolina"
+        self.tags = "#jobs #layoffs #SC #southcarolina"
 
     def _fetch_latest_notices(self) -> dict:
         layoffs = {}
