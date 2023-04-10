@@ -7,3 +7,4 @@ from .nj import NJWarn
 from .ny import NYWarn
 from .sc import SCWarn
 from .tx import TXWarn
+from .wa import WAWarn
