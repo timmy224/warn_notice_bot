@@ -2,21 +2,29 @@ from datetime import datetime
 import os
 from typing import List
 
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
+
 import pandas as pd
 from PyPDF2 import PdfReader
 from pytwitter import Api
+import pytz
 import requests
 from tabula import read_pdf
-import pytz
+from tempfile import mkdtemp
+
 
 class Warn:
     REQUEST_TOKEN_URL = "https://api.twitter.com/oauth/request_token?oauth_callback=oob&x_auth_access_type=write"
     MAX_MSG_LEN = 280
 
     def __init__(self, url:str=None, date:str=None):
+        self.driver = None
+        self.tags = ""
         self._url = url
         self._compare_date = date if date else self.compare_date()
-        self.tags = ""
         self._api = None
         
     def create_messages(self, layoffs: dict) -> str:
@@ -53,14 +61,51 @@ class Warn:
     
     def fetch_latest_notices(self) -> List[dict]: 
         print("Fetching layoff notices...")
-        layoffs = self._fetch_latest_notices()
+        
+        self._get_web_driver()
 
+        layoffs = self._fetch_latest_notices()
         print(f"{len(layoffs)} layoffs found")
+
+        self._close_web_driver()
+
         return layoffs
 
     def _fetch_latest_notices(self) -> List[dict]:
         raise NotImplementedError
     
+    def _get_web_driver(self) -> webdriver:
+        if self.driver is None:
+            options = Options()
+            if os.environ.get('ENV') == "production":
+                options.add_argument('--headless')
+                options.add_argument('--no-sandbox')
+                options.add_argument("--disable-gpu")
+                options.add_argument("--window-size=1280x1696")
+                options.add_argument("--single-process")
+                options.add_argument("--disable-dev-shm-usage")
+                options.add_argument("--disable-dev-tools")
+                options.add_argument("--no-zygote")
+                options.add_argument(f"--user-data-dir={mkdtemp()}")
+                options.add_argument(f"--data-path={mkdtemp()}")
+                options.add_argument(f"--disk-cache-dir={mkdtemp()}")
+                options.add_argument("--remote-debugging-port=9222")
+                options.binary_location = '/opt/chrome/chrome'
+                self.driver = webdriver.Chrome(
+                    "/opt/chromedriver",
+                    options=options
+                )
+            else:
+                self.driver = webdriver.Chrome(
+                    ChromeDriverManager().install(),
+                    options=options
+                )
+        return self.driver
+    
+    def _close_web_driver(self) -> None:
+        if self.driver:
+            self.driver.close()
+
     def get_pdf_tables(self, pdf_link:str, **kwargs) -> List[pd.DataFrame]:
         dfs = read_pdf(pdf_link, pages="all", **kwargs)
         return dfs
