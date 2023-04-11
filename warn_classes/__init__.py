@@ -1,5 +1,6 @@
 from .ca import CAWarn
 from .oh import OHWarn
+from .ga import GAWarn
 from .ma import MAWarn
 from .mi import MIWarn
 from .nc import NCWarn
