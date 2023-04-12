@@ -5,11 +5,20 @@ import warn_classes
 
 def handler(event={}, context=None) -> None:
     date = event.get("date")
+    state = event.get("state")
 
-    clsmembers = inspect.getmembers(
-        sys.modules[warn_classes.__name__], 
-        inspect.isclass
-    )
+    if state:
+        module_name = state.lower()
+        state = state.upper()
+        clsmembers = [(
+            f"{state}Warn",
+            eval(f"warn_classes.{module_name}.{state}"+"Warn")
+        )]
+    else:
+        clsmembers = inspect.getmembers(
+            sys.modules[warn_classes.__name__], 
+            inspect.isclass
+        )
 
     for i in range(len(clsmembers)):
         bot_name = clsmembers[i][0]
