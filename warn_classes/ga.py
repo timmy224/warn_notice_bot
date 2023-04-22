@@ -18,7 +18,11 @@ class GAWarn(Warn):
 
     def _fetch_latest_notices(self) -> dict:
         layoffs = {}
-        df = self.get_html_rows()[0]
+        rows = self.get_html_rows()
+        if rows is None:
+            return layoffs
+        
+        df = rows[0]
         if df is None:
             return {}
         df["Submitted Date"] = pd.to_datetime(

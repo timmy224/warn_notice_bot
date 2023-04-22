@@ -25,7 +25,7 @@ class CAWarn(Warn):
             number_affected = row['No. Of\nEmployees']
             if company_name not in layoffs:
                 layoffs[company_name] = 0 
-            layoffs[company_name] += number_affected
+            layoffs[company_name] += int(number_affected)
         return layoffs
 
     def get_month_date_year(self, date:str):
