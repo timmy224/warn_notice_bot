@@ -43,12 +43,13 @@ def handler(event={}, context=None) -> None:
         send_email_alert(msg)
 
 def send_email_alert(message):
-    client = boto3.client('sns')
-    _response = client.publish (
-        TargetArn = os.environ.get('SNS_ARN'),
-        Message = message,
-        Subject = f"WarnNoticeBot Alert"
-    )
+    if os.environ.get("ENV") == "production":
+        client = boto3.client('sns')
+        _response = client.publish (
+            TargetArn = os.environ.get('SNS_ARN'),
+            Message = message,
+            Subject = f"WarnNoticeBot Alert"
+        )
 
 if __name__ == "__main__":
     handler()
