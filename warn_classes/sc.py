@@ -24,10 +24,14 @@ class SCWarn(Warn):
         for i_df in dfs:
             df = pd.concat([df, i_df])
         
-        df = df[~df["Notice Date"] == self._compare_date]
+        df = df[df["Notice Date"] == self._compare_date]
         for _, row in df.iterrows():
             company_name = row["Company"]
-            number_affected = int(row["Impacted"])
+            try:
+                number_affected = int(row["Impacted"])
+            except:
+                continue
+
             if company_name not in layoffs:
                 layoffs[company_name] = 0
             layoffs[company_name] += number_affected
