@@ -1,4 +1,6 @@
+import boto3
 import inspect
+import os
 import sys
 
 import warn_classes
@@ -34,9 +36,19 @@ def handler(event={}, context=None) -> None:
             print()
         except:
             errors.append(bot_name)
-    
+            
     if errors:
-        print(f"Errors fetching for the following states: {', '.join(errors)}")
+        msg = f"Errors fetching for the following states: {', '.join(errors)}"
+        print(msg)
+        send_email_alert(msg)
+
+def send_email_alert(message):
+    client = boto3.client('sns')
+    _response = client.publish (
+        TargetArn = os.environ.get('SNS_ARN'),
+        Message = message,
+        Subject = f"WarnNoticeBot Alert"
+    )
 
 if __name__ == "__main__":
     handler()
