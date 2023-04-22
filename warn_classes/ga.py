@@ -36,7 +36,9 @@ class GAWarn(Warn):
             return {}
         
         for _, row in df.iterrows():
-            company_name = df["Company Name"]
+            company_name = self.get_company_name(str(df["Company Name"]))
+            if company_name is None:
+                continue
             number_affected = row["Total Number of Affected Employees"]
             if company_name not in layoffs:
                 layoffs[company_name] = 0 
@@ -70,4 +72,11 @@ class GAWarn(Warn):
             return dfs
         except:
             return None
-        
+    
+    def get_company_name(self, text):
+        match = re.match(r"^\d+\s*(.*)$", text)
+        if match:
+            captured_text = match.group(1)
+            return captured_text 
+        else:
+            return None
