@@ -6,7 +6,6 @@ from typing import List
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service
 
 import pandas as pd
 from PyPDF2 import PdfReader
@@ -78,7 +77,7 @@ class Warn:
     def _get_web_driver(self) -> webdriver:
         if self.driver is None:
             options = Options()
-            if os.environ.get('ENV') == "production":
+            if os.environ.get('ENV') in ("production", "staging"):
                 options.add_argument('--headless')
                 options.add_argument('--no-sandbox')
                 options.add_argument("--disable-gpu")
@@ -91,7 +90,13 @@ class Warn:
                 options.add_argument(f"--data-path={mkdtemp()}")
                 options.add_argument(f"--disk-cache-dir={mkdtemp()}")
                 options.add_argument("--remote-debugging-port=9222")
+
+                # /tmp for AWS Lambda write 
+                prefs = {'download.default_directory' : '/tmp'}
+                options.add_experimental_option('prefs', prefs)
+
                 options.binary_location = '/opt/chrome/chrome'
+                
                 self.driver = webdriver.Chrome(
                     "/opt/chromedriver",
                     options=options
