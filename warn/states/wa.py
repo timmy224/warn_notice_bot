@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import requests
 
-from ..warn_base import Warn
+from .base_warn import Warn
 
 class WAWarn(Warn):
     url = "https://fortress.wa.gov/esd/file/warn/Public/SearchWARN.aspx"
