@@ -1,7 +1,7 @@
 import re
 
 import pandas as pd
-from .base_warn import Warn
+from ..warn_base import Warn
 
 class TXWarn(Warn):
     url = 'https://www.twc.texas.gov/files/news/warn-act-listings-2023-twc.xlsx'

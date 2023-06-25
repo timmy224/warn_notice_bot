@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 
-from .base_warn import Warn
+from ..warn_base import Warn
 
 class NCWarn(Warn):
     url = "https://www.commerce.nc.gov/data-tools-reports/labor-market-data-tools/workforce-warn-reports/report-workforce-warn-listings-2023/open"

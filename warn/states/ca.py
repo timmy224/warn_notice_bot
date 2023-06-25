@@ -2,7 +2,7 @@ import re
 from typing import List
 
 import pandas as pd
-from .base_warn import Warn
+from ..warn_base import Warn
 
 class CAWarn(Warn):
     url = 'https://edd.ca.gov/siteassets/files/jobs_and_training/warn/warn_report.xlsx'
@@ -14,9 +14,11 @@ class CAWarn(Warn):
 
     def _fetch_latest_notices(self) -> dict:
         df = pd.read_excel(self.url, sheet_name='Sheet1', dtype=str)
+        print(df.columns)
+        df['Received\nDate'] = df['Received\nDate'].astype(str)
+
         month, date, year = self.get_month_date_year(self._compare_date)
         match_date = f'{year}-{month}-{date} 00:00:00'
-        df['Received\nDate'] = df['Received\nDate'].astype(str)
         df = df[df['Received\nDate'] == match_date]
 
         layoffs = {}

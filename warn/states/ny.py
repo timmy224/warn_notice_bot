@@ -3,7 +3,7 @@ from typing import List, Tuple
 
 from bs4 import BeautifulSoup
 import requests
-from .base_warn import Warn
+from ..warn_base import Warn
 
 class NYWarn(Warn):
     url = "https://dol.ny.gov/warn-notices"

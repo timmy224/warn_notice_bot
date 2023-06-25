@@ -3,7 +3,7 @@ import inspect
 import os
 import sys
 
-import warn_classes
+import warn
 
 def handler(event={}, context=None) -> None:
     date = event.get("date")
@@ -18,7 +18,7 @@ def handler(event={}, context=None) -> None:
         )]
     else:
         clsmembers = inspect.getmembers(
-            sys.modules[warn_classes.__name__], 
+            sys.modules[warn.__name__], 
             inspect.isclass
         )
 
@@ -34,8 +34,8 @@ def handler(event={}, context=None) -> None:
                 warn_bot.post_to_twitter(msgs)
             print(f'{bot_name} has completed')
             print()
-        except:
-            errors.append(bot_name)
+        except Exception as e:
+            errors.append(f"{bot_name}: {str(e)}")
             
     if errors:
         msg = f"Errors fetching for the following states: {', '.join(errors)}"
