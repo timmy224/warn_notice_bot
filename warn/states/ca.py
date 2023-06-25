@@ -14,7 +14,8 @@ class CAWarn(Warn):
 
     def _fetch_latest_notices(self) -> dict:
         df = pd.read_excel(self.url, sheet_name='Sheet1', dtype=str)
-        print(df.columns)
+        if 'Received\nDate' not in df.columns:
+            df = pd.read_excel(self.url, sheet_name='Sheet1', dtype=str, skiprows=1)
         df['Received\nDate'] = df['Received\nDate'].astype(str)
 
         month, date, year = self.get_month_date_year(self._compare_date)
