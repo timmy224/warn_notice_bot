@@ -1,7 +1,7 @@
 import re
 
 import pandas as pd
-from .base_warn import Warn
+from ..warn_base import Warn
 
 class MAWarn(Warn):
     url = 'https://www.mass.gov/service-details/worker-adjustment-and-retraining-act-warn-weekly-report'
@@ -51,14 +51,22 @@ class MAWarn(Warn):
         for _, row in df.iterrows():
             company_name = row['Company Name'].strip()
             number_str = str(row['# Affected']).split(" ")
-
             try:
                 number_affected = int(number_str[-1])
             except:
+                pass
+            
+            try:
                 number_affected = int(number_str[0])
+            except:
+                affected_status = number_str
 
             if company_name not in layoffs:
                 layoffs[company_name] = 0 
-            layoffs[company_name] += number_affected
+
+            try:
+                layoffs[company_name] += number_affected
+            except:
+                layoffs[company_name] = affected_status
 
         return layoffs

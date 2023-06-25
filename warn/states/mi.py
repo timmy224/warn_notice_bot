@@ -3,7 +3,7 @@ from typing import List
 from bs4 import BeautifulSoup
 import pandas as pd
 import requests
-from .base_warn import Warn
+from ..warn_base import Warn
 
 class MIWarn(Warn):
     url = "https://milmi.org/warn/"

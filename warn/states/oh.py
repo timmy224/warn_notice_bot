@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import requests
 
-from .base_warn import Warn
+from ..warn_base import Warn
 
 class OHWarn(Warn):
     url = "https://jfs.ohio.gov/warn/current.stms"
@@ -34,7 +34,11 @@ class OHWarn(Warn):
             number_affected = row["Potential Number Affected"]
             if company_name not in layoffs:
                 layoffs[company_name] = 0 
-            layoffs[company_name] += number_affected
+
+            try:
+                layoffs[company_name] += int(number_affected)
+            except:
+                layoffs[company_name] = number_affected
         return layoffs
   
     def _get_html_table(self, url:str=None) -> pd.DataFrame:

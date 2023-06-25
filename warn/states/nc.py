@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 
-from .base_warn import Warn
+from ..warn_base import Warn
 
 class NCWarn(Warn):
     url = "https://www.commerce.nc.gov/data-tools-reports/labor-market-data-tools/workforce-warn-reports/report-workforce-warn-listings-2023/open"
@@ -21,11 +21,17 @@ class NCWarn(Warn):
         )
         df = pd.DataFrame()
         for i_df in dfs:
-            if len(i_df.columns) == 13:
+            if len(df) == 0: 
+                df = i_df
+                continue
+
+            if len(i_df.columns) == len(df.columns):
                 df = pd.concat([df, i_df])
+        if len(df) == 0:
+            return layoffs
         
-        df = df.iloc[:,[6, 7, 10]]
         df = df.reset_index(drop="index").T.reset_index().T # shift header down
+        df = df.iloc[:, [2, 4, 7]]
         df.columns = ["Notice Date", "Company Name", "Number Affected"]
         df = df[df["Notice Date"] == self._compare_date]
         if len(df) == 0:

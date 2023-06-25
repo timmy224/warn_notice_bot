@@ -3,7 +3,7 @@ from typing import List, Tuple
 
 from bs4 import BeautifulSoup
 import requests
-from .base_warn import Warn
+from ..warn_base import Warn
 
 class NYWarn(Warn):
     url = "https://dol.ny.gov/warn-notices"
@@ -42,7 +42,11 @@ class NYWarn(Warn):
             company_name, number_affected = self.process_pdf(pdf_text)
             if company_name not in layoffs:
                 layoffs[company_name] = 0 
-            layoffs[company_name] += number_affected
+            try:
+                layoffs[company_name] += number_affected
+            except:
+                layoffs[company_name] = "Refer to Warn Notice"
+
         return layoffs
   
     def get_rows(self) -> List:
@@ -60,11 +64,15 @@ class NYWarn(Warn):
             return pdf_link
 
     def process_pdf(self, pdf_text:str) -> Tuple[str, str]:
-        company_pattern = r"(?:C\n?o\n?m\n?p\n?a\n?n\n?y: )\s+([^\n]+)"
-        company_name = re.search(company_pattern, pdf_text).group(1)
+        company_pattern = r"C\n?o\n?m\n?p\n?a\n?n\n?y\s*:\s*(.*?)\s*\n"
+        company_name = re.search(company_pattern, pdf_text)
+        if company_name:
+            company_name = company_name.group(1)
 
         number_pattern = r"N\n?u\n?m\n?b\n?e\n?r\s+A\s*f\n?f\n?e\n?c\n?t\n?e\n?d:\s*(\d+)"
-        number_affected = int(re.search(number_pattern, pdf_text).group(1))
-        
+        number_affected = re.search(number_pattern, pdf_text)
+        if number_affected:
+            number_affected = int(number_affected.group(1))
+
         return company_name.strip(), number_affected
     
