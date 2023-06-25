@@ -72,11 +72,3 @@ class GAWarn(Warn):
             return dfs
         except:
             return None
-    
-    def get_company_name(self, text):
-        match = re.match(r"^\d+\s*(.*)$", text)
-        if match:
-            captured_text = match.group(1)
-            return captured_text 
-        else:
-            return None

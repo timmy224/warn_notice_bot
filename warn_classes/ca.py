@@ -27,18 +27,3 @@ class CAWarn(Warn):
                 layoffs[company_name] = 0 
             layoffs[company_name] += int(number_affected)
         return layoffs
-
-    def get_month_date_year(self, date:str):
-        date_regex = re.compile(r'(\d{1,2})/(\d{1,2})/(\d{1,4})')
-        match = date_regex.search(date)
-        if match:
-            month = match.group(1)
-            date = match.group(2)
-            year = match.group(3)
-
-            if len(month) == 1:
-                month = "0" + month
-            if len(date) == 1:
-                date = "0" + date
-
-        return month, date, year
