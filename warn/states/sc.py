@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 
-from .base_warn import Warn
+from ..warn_base import Warn
 
 class SCWarn(Warn):
     url = "https://scworks.org/employer/employer-programs/risk-closing/layoff-notification-reports"

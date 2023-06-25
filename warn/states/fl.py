@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 import pandas as pd
 
-from .base_warn import Warn
+from ..warn_base import Warn
 
 class FLWarn(Warn):
     url = "https://reactwarn.floridajobs.org/WarnList/Records?year=2023"
@@ -64,28 +64,4 @@ class FLWarn(Warn):
             dfs = pd.read_html(table_html)
             return dfs
         except:
-            return None
-        
-    def get_month_date_year(self, date:str):
-        date_regex = re.compile(r'(\d{1,2})/(\d{1,2})/(\d{1,4})')
-        match = date_regex.search(date)
-        if match:
-            month = match.group(1)
-            date = match.group(2)
-            year = match.group(3)
-
-            if len(month) == 1:
-                month = "0" + month
-            if len(date) == 1:
-                date = "0" + date
-
-        return month, date, year
-    
-    def get_company_name(self, text):
-        match = re.match(r"^\d+\s*(.*)$", text)
-
-        if match:
-            captured_text = match.group(1)
-            return captured_text 
-        else:
             return None

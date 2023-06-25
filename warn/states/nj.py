@@ -2,7 +2,7 @@ import re
 
 from typing import Tuple
 
-from .base_warn import Warn
+from ..warn_base import Warn
 
 class NJWarn(Warn):
     url = "https://www.nj.gov/labor/assets/PDFs/WARN/2023_WARN_Notice_Archive.pdf"

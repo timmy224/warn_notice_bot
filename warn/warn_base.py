@@ -1,5 +1,6 @@
 from datetime import datetime
 import os
+import re
 from typing import List
 
 from selenium import webdriver
@@ -125,15 +126,16 @@ class Warn:
         return text
     
     def create_twitter_client(self) -> Api:
-        print("Creating Twitter client...")
-        api = Api(
-            consumer_key=os.environ.get('consumer_key'),
-            consumer_secret=os.environ.get('consumer_secret'),
-            access_token=os.environ.get('access_token'),
-            access_secret=os.environ.get('access_token_secret')
-        )
-        print("Created twitter client")
-        self._api = api
+        if self._api is None:
+            print("Creating Twitter client...")
+            api = Api(
+                consumer_key=os.environ.get('consumer_key'),
+                consumer_secret=os.environ.get('consumer_secret'),
+                access_token=os.environ.get('access_token'),
+                access_secret=os.environ.get('access_token_secret')
+            )
+            print("Created twitter client")
+            self._api = api
     
     def post_to_twitter(self, msgs: List[str]) -> None:
         if not msgs:
@@ -152,3 +154,27 @@ class Warn:
         curr_date = curr_date.strftime("%-m/%-d/%Y")
         print(curr_date)
         return curr_date
+    
+    def get_company_name(self, text:str):
+        match = re.match(r"^\d+\s*(.*)$", text)
+
+        if match:
+            captured_text = match.group(1)
+            return captured_text 
+        else:
+            return None
+    
+    def get_month_date_year(self, date:str):
+        date_regex = re.compile(r'(\d{1,2})/(\d{1,2})/(\d{1,4})')
+        match = date_regex.search(date)
+        if match:
+            month = match.group(1)
+            date = match.group(2)
+            year = match.group(3)
+
+            if len(month) == 1:
+                month = "0" + month
+            if len(date) == 1:
+                date = "0" + date
+
+        return month, date, year

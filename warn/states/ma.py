@@ -1,7 +1,7 @@
 import re
 
 import pandas as pd
-from .base_warn import Warn
+from ..warn_base import Warn
 
 class MAWarn(Warn):
     url = 'https://www.mass.gov/service-details/worker-adjustment-and-retraining-act-warn-weekly-report'

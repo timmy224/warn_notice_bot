@@ -2,32 +2,43 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import requests
 
-from .base_warn import Warn
+from ..warn_base import Warn
 
-class WAWarn(Warn):
-    url = "https://fortress.wa.gov/esd/file/warn/Public/SearchWARN.aspx"
-    state = "WA"
+class OHWarn(Warn):
+    url = "https://jfs.ohio.gov/warn/current.stms"
+    state = "OH"
 
     def __init__(self, date=None):
         super().__init__(self.url, date)
-        self.tags = "#jobs #layoffs #WA #washington"
+        self.tags = "#jobs #layoffs #OH #ohio"
 
     def _fetch_latest_notices(self) -> dict:
         layoffs = {}
         df = self._get_html_table(self._url)
         if df is None:
             return {}
-        
-        df = df[df["Received Date"] == self._compare_date]
+
+        month, day, year = self._compare_date.split("/")
+        curr_date = "/".join([
+            month.zfill(2),
+            day.zfill(2),
+            year
+        ])
+
+        df = df[df["Date Received"] == curr_date]
         if len(df) == 0:
             return {}
 
         for _, row in df.iterrows():
             company_name = row["Company"]
-            number_affected = row["# of Workers"]
+            number_affected = row["Potential Number Affected"]
             if company_name not in layoffs:
                 layoffs[company_name] = 0 
-            layoffs[company_name] += int(number_affected)
+
+            try:
+                layoffs[company_name] += int(number_affected)
+            except:
+                layoffs[company_name] = number_affected
         return layoffs
   
     def _get_html_table(self, url:str=None) -> pd.DataFrame:
@@ -37,10 +48,8 @@ class WAWarn(Warn):
         try:
             response = requests.get(self._url)
             soup = BeautifulSoup(response.text, 'html.parser')
-            html_table = soup.find('table', {"id": "ucPSW_gvMain"})
-            df = pd.read_html(str(html_table), match='Company')[0]
-            df = df.rename(columns=df.iloc[1])
-            df = df.iloc[2:]
-            return df
+            html_table = soup.find('table', {"class": "warnTable"})
+            dfs = pd.read_html(str(html_table))
+            return dfs[0]
         except:
             return None

@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 import pandas as pd
 
-from .base_warn import Warn
+from ..warn_base import Warn
 
 class GAWarn(Warn):
     url = "https://www.tcsg.edu/warn-public-view/"
@@ -71,12 +71,4 @@ class GAWarn(Warn):
             dfs = pd.read_html(table_html)
             return dfs
         except:
-            return None
-    
-    def get_company_name(self, text):
-        match = re.match(r"^\d+\s*(.*)$", text)
-        if match:
-            captured_text = match.group(1)
-            return captured_text 
-        else:
             return None
